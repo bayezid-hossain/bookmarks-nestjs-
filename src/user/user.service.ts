@@ -12,9 +12,12 @@ export class UserService {
             },
             data: {
                 ...dto
+            }, omit: {
+                hash: true
             }
         })
-
         return user
+
+
     }
 }
