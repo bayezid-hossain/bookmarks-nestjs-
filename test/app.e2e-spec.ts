@@ -5,6 +5,7 @@ import { PrismaService } from '../src/prisma/prisma.service';
 import * as pactum from 'pactum'
 import { AuthDto } from 'src/auth/dto';
 import passport from 'passport';
+import { EditUserDto } from 'src/user/dto';
 describe('App e2e', () => {
   let app: INestApplication
   let prisma: PrismaService
@@ -89,7 +90,13 @@ describe('App e2e', () => {
       })
     })
     describe('Edit user', () => {
-
+      const dto: EditUserDto = {
+        firstName: "Bayezid",
+        email: "me.bayezid@gmail.com"
+      }
+      it('should edit current user', () => {
+        return pactum.spec().patch('/users').withBody(dto).withBearerToken(`$S{userAt}`).expectStatus(200).expectBodyContains(dto.firstName).expectBodyContains(dto.email)
+      })
     })
   })
 
